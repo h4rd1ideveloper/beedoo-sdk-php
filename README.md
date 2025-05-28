@@ -1,89 +1,57 @@
-<p align="center"><a href="http://document-api.beedoo.io.s3-website-us-east-1.amazonaws.com/" target="_blank"><img src="https://www.beedoo.com.br/wp-content/uploads/2019/09/LOGO-BEEDOO-EDTECH-WHITE.png" width="400"></a></p>
+# 🐝 Beedoo SDK PHP
 
-<!-- <p align="center">
-<a href="https://packagist.org/packages/beedooedtech/beedoo-sdk-php"><img src="https://img.shields.io/packagist/dt/beedooedtech/beedoo-sdk-php" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/beedooedtech/beedoo-sdk-php"><img src="https://img.shields.io/packagist/v/beedooedtech/beedoo-sdk-php" alt="Latest Stable Version"></a>
-</p> -->
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Composer](https://img.shields.io/badge/Composer-885630?style=for-the-badge&logo=composer&logoColor=white)
+![REST API](https://img.shields.io/badge/REST_API-009688?style=for-the-badge&logo=api&logoColor=white)
+![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 
-# Sobre Beedoo SDK
+SDK oficial em PHP para integração com a API do Beedoo, desenvolvido para facilitar a comunicação com a plataforma de forma prática e eficiente.
 
-Acessar documentação completa da [Beedoo API](http://document-api.beedoo.io.s3-website-us-east-1.amazonaws.com).
+## 📋 Sobre o Beedoo
 
-A API é organizada seguindo a arquitetura REST, boas práticas, convenções e padrões como json:api e JSend. Nossa API tem URLs orientadas a recursos, retorna respostas em JSON e usa códigos de resposta HTTP padrão, autenticação e verbos.
+O Beedoo é uma plataforma de gestão de conhecimento e engajamento corporativo que oferece recursos como wiki, grupos, gestão de usuários e muito mais. A API do Beedoo segue a arquitetura REST, adotando boas práticas, convenções e padrões como json:api e JSend.
 
-Esse SDK em PHP foi desenvolvido no intuito de tornar mais prático a integração com nossa API.
+## 🚀 Funcionalidades
 
-Bom desenvolvimento! 😉
+Este SDK oferece acesso simplificado aos seguintes recursos da API Beedoo:
 
-# Índice
+- **Gestão de Usuários**: Cadastro e atualização de usuários
+- **Grupos**: Consulta e gerenciamento de grupos
+- **Wiki**: Consulta de artigos, marcação de leitura
+- **Times**: Consulta de avatares e identidade visual
+- **Upload**: Geração de URLs pré-assinadas para upload no S3
+- **Autenticação**: Obtenção de tokens de acesso
 
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [BeeHub API](#beehub-api)
-  - [Wiki](#beehub-wiki)
-    - [Consultar artigos na Wiki](#consultar-artigos-na-wiki)
-  - [User](#beehub-user)
-    - [Access Token](#access-token)
-- [Beedoo API](#beedoo-api)
-  - [Groups](#groups)
-    - [Consultar grupos](#consultar-grupos)
-  - [Wiki](#beedoo-wiki)
-    - [Retorna se um determinado artigo foi lido](#retorna-se-um-determinado-artigo-lido)
-    - [Marca um artigo como lido](#marca-um-artigo-como-lido)
-  - [Team](#team)
-    - [Retornar os avatares do time](#retornar-os-avatares-do-time)
-  - [Upload](#upload)
-    - [Retornar uma URL pre assinada para upload de arquivos para o S3](#retornar-uma-URL-pre-assinada-para-upload-de-arquivos-para-o-S3)
-  - [Visual Identity](#visual-identity)
-    - [Retornar a identidade visual do time](#retornar-a-identidade-visual-do-time)
-  - [User](#beedoo-user)
-    - [Cadastrar novo usuário](#cadastrar-novo-usuário)
-    - [Atualizar novo usuário](#atualizar-usuário)
+## 🛠️ Requisitos
 
-# Instalação
+- PHP 7.2 ou superior
+- Composer
+- Extensão cURL habilitada
 
-Instale a biblioteca utilizando o comando:
+## 📦 Instalação
 
-```shell
+Instale a biblioteca utilizando o Composer:
+
+```bash
 composer require beedooedtech/beedoo-sdk-php
 ```
 
-## Configuração
+## ⚙️ Configuração
 
 Para incluir a biblioteca em seu projeto, basta fazer o seguinte:
 
 ```php
 <?php
 
-require __DIR__ . "/vendor/autoload.php"
+require __DIR__ . "/vendor/autoload.php";
 
-$beedoo = new Beedoo\Client("SECRET_KEY");
+// Inicialize o cliente com sua chave secreta
+$beedoo = new Beedoo\Client("SUA_SECRET_KEY");
 ```
 
-# BeeHub API
+## 📚 Exemplos de Uso
 
-## BeeHub Wiki
-
-### Consultar artigos na Wiki
-
-```php
-<?php
-
-$params = [
-  "question" => "assunto_a_ser_pesquisado",
-  "category" => 1,
-  "tag" => 5,
-  "offset" => 20,
-  "limit" => 20,
-];
-
-$groups = $beedoo->groups()->get($params);
-
-```
-
-## BeeHub User
-
-### Access Token
+### Autenticação - Obter Access Token
 
 ```php
 <?php
@@ -93,14 +61,9 @@ $payloadAuth = [
 ];
 
 $accessToken = $beedoo->accessToken()->get($payloadAuth);
-
 ```
 
-# Beedoo API
-
-## Groups
-
-### Consultar grupos
+### Consultar Grupos
 
 ```php
 <?php
@@ -113,12 +76,25 @@ $params = [
 ];
 
 $groups = $beedoo->groups()->get($params);
-
 ```
 
-## Beedoo Wiki
+### Consultar Artigos na Wiki
 
-### Retorna se um determinado artigo foi lido
+```php
+<?php
+
+$params = [
+  "question" => "assunto_a_ser_pesquisado",
+  "category" => 1,
+  "tag" => 5,
+  "offset" => 20,
+  "limit" => 20,
+];
+
+$articles = $beedoo->wiki()->get($params);
+```
+
+### Verificar se um Artigo foi Lido
 
 ```php
 <?php
@@ -127,11 +103,10 @@ $article = [
   'id' => 279
 ];
 
-$beedoo = $beedoo->wiki()->getIsReadArticle($article);
-
+$result = $beedoo->wiki()->getIsReadArticle($article);
 ```
 
-### Marca um artigo como lido
+### Marcar um Artigo como Lido
 
 ```php
 <?php
@@ -140,52 +115,39 @@ $article = [
   'id' => 279
 ];
 
-$beedoo = $beedoo->wiki()->saveArticleRead($article);
-
+$result = $beedoo->wiki()->saveArticleRead($article);
 ```
 
-## Team
-
-### Retornar os avatares do time
+### Obter Avatares do Time
 
 ```php
 <?php
 
-$beedoo = $beedoo->team()->getAvatar();
-
+$avatars = $beedoo->team()->getAvatar();
 ```
 
-## Upload
-
-### Retornar uma URL pre assinada para upload de arquivos para o S3
+### Obter URL para Upload de Arquivos
 
 ```php
 <?php
 
-$beedoo = $beedoo->upload()->getUrl();
-
+$uploadUrl = $beedoo->upload()->getUrl();
 ```
 
-## Visual Identity
-
-### Retornar a identidade visual do time
+### Obter Identidade Visual do Time
 
 ```php
 <?php
 
-$beedoo = $beedoo->visualIdentity()->get();
-
+$visualIdentity = $beedoo->visualIdentity()->get();
 ```
 
-## Beedoo User
-
-### Cadastrar novo usuário
+### Cadastrar Novo Usuário
 
 ```php
 <?php
 
 /** Campos obrigatórios */
-
 $userData = [
   "username" => "jhonsnow",
   "name" => "Jhon Snow",
@@ -198,13 +160,11 @@ $userData = [
 ];
 
 $user = $beedoo->user()->create($userData);
-
 ```
 
-### Atualizar usuário
+### Atualizar Usuário Existente
 
 ```php
-
 <?php
 
 $userData = [
@@ -238,6 +198,57 @@ $userData = [
 ];
 
 $user = $beedoo->user()->update($userData);
-
 ```
-BeeTalk
+
+## 🔄 Tratamento de Erros
+
+O SDK utiliza exceções para indicar erros de comunicação com a API. Recomenda-se utilizar blocos try/catch para capturar e tratar essas exceções:
+
+```php
+<?php
+
+try {
+    $groups = $beedoo->groups()->get($params);
+} catch (\Exception $e) {
+    // Tratar o erro
+    echo "Erro na requisição: " . $e->getMessage();
+}
+```
+
+## 📝 Parâmetros Comuns
+
+Muitos métodos aceitam parâmetros de paginação:
+
+- `offset`: Posição inicial para retorno dos registros (padrão: 0)
+- `limit`: Quantidade máxima de registros a serem retornados (padrão: 20)
+
+## 🔒 Segurança
+
+- Nunca compartilhe sua SECRET_KEY
+- Utilize HTTPS para todas as comunicações
+- Armazene credenciais em variáveis de ambiente ou arquivos de configuração protegidos
+
+## 🧪 Testes
+
+O SDK inclui testes unitários que podem ser executados com PHPUnit:
+
+```bash
+./vendor/bin/phpunit
+```
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+## 📚 Recursos Adicionais
+
+- [Documentação completa da API Beedoo](https://api.beedoo.io/docs)
+- [Beedoo Website](https://www.beedoo.io)
+
+---
+
+⭐ Desenvolvido por [Beedoo EdTech](https://github.com/beedooedtech) e mantido por [Yan Policarpo](https://github.com/h4rd1ideveloper)
